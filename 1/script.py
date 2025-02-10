@@ -1,12 +1,3 @@
-def string_to_sorted_list(list):
-    new_list=[]
-    for i in list:
-        new_list.append(int(i))
-
-    new_list.sort()
-
-    return new_list
-
 def get_distance_between_lists(list1, list2):
     total_distance = 0
 
@@ -17,25 +8,29 @@ def get_distance_between_lists(list1, list2):
 
     return total_distance
 
+def file_to_sorted_int_lists(file_name):
+	list1 = []
+	list2 = []
+
+	f = open(file_name, "r")
+	for x in f:
+		stripped_split_line = x.strip().split()
+
+		id1 = int(stripped_split_line[0])
+		id2 = int(stripped_split_line[1])
+
+		list1.append(id1)
+		list2.append(id2)
+
+	list1.sort()
+	list2.sort()
+      
+	return [list1, list2]
+
 # MAIN
 
-# read file
+[list1, list2] = file_to_sorted_int_lists("input.txt")
 
-total_distance = 0
+distance = get_distance_between_lists(list1, list2)
 
-f = open("input.txt", "r")
-for x in f:
-  stripped_split_line = x.strip().split()
-
-  list1 = stripped_split_line[0]
-  list2 = stripped_split_line[1]
-
-  int_list1 = string_to_sorted_list(list1)
-  int_list2 = string_to_sorted_list(list2)
-
-  distance = get_distance_between_lists(int_list1, int_list2)
-
-  total_distance += distance
-
-print(total_distance)
-
+print(distance)
