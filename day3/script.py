@@ -2,30 +2,17 @@ import re
 
 txt = open("input.txt").read()
 
-matches = re.findall("(?<=mul\()\d{1,3},\d{1,3}(?=\))|do\(\)|don't\(\)", txt)
-
-# print(matches)
+matches = re.findall("(?<=mul\()(\d{1,3}),(\d{1,3})(?=\))|(do\(\))|(don't\(\))", txt)
 
 enabled = True
 
-results=[]
+results=0
 
-for match in matches:
-    # print(enabled)
-    if match == "don't()":
-        enabled = False
-    elif match == "do()":
-        enabled = True
+for a, b, do, dont in matches:
+    if do or dont:
+        enabled = bool(do)
     elif enabled:
-        args = [int(i) for i in match.split(",")]
-        result = args[0] * args[1]
-        results.append(result)
-        # print(match + "=" + str(result))
-    # else :
-        # print(match, "Not enabled")
+        result = int(a) * int(b)
+        results += result
 
-print(sum(results))
-
-# result = [int(match[0])*int(match[1]) for match in matches]
-
-# print(sum(result))
+print(results)
