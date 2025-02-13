@@ -2,6 +2,8 @@ import re
 
 txt = open("input.txt").read()
 
-matches = re.findall("(?<=mul\()[0-9]{1,3}(?=,[0-9]{1,3}\))|(?<=mul\([0-9]{1,3},)[0-9]{1,3}(?=\))", txt)
+matches = re.findall("(?<=mul\()(\d{1,3}),(\d{1,3})(?=\))", txt)
 
-print(matches)
+result = [int(match[0])*int(match[1]) for match in matches]
+
+print(sum(result))
