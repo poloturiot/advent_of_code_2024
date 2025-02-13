@@ -1,29 +1,12 @@
-# file to data
-
-# data = [*map(int, open("input.txt").read().split())]
-
-# print(data)
-
-# A = data[0:5]
-# B = data[5:10]
-
-# list_of_list = map(data)
-
-# print(A)
-# print(B)
-
-def report_is_safe(data):
-    result_list=[]
-    for i in range(len(data)-1):
-        result_list.append(data[i]-data[i+1])
+def report_is_safe(report):
     
-    is_increasing = all(num in range (-3,0) for num in result_list)
-    is_decreasing = all(num in range (1,4) for num in result_list)
+    result_list=[report[i]-report[i+1] for i in range(len(report)-1)]
 
-    return is_increasing or is_decreasing
+    return set(result_list) <= {1,2,3} or set(result_list) <= {-1, -2, -3}
 
-data = [[1, 2, 4, 5, 7], [1, 2, 4, 5, 1]]
+data = [[int(x) for x in y.split(" ")] for y in open("input.txt").read().split("\n")]
 
-result=list(map(report_is_safe, data))
+print(sum([report_is_safe(report) for report in data]))
 
-print(result.count(True))
+safe_count = sum([any([report_is_safe(row[:i] + row[i + 1:]) for i in range(len(row))]) for row in data])
+print(safe_count)
