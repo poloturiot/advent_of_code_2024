@@ -11,8 +11,8 @@ results=0
 for a, b, do, dont in matches:
     if do or dont:
         enabled = bool(do)
-    elif enabled:
-        result = int(a) * int(b)
+    else:
+        result = int(a) * int(b) * enabled
         results += result
 
 print(results)
