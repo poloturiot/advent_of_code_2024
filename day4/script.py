@@ -1,7 +1,15 @@
 import numpy as np
 
 def square_is_letter(row,column,x,y,letter):
-    return 0 < row+y < len(matrix[row]) and 0 < column+x < len(matrix) and matrix[row+y,column+x] == letter
+    # print("Checking on [" + str(row+y) + "," + str(column+x) +"]")
+    if not 0 <= row+y < len(matrix[row]) or not 0 <= column+x < len(matrix) :
+        # print("[" + str(row+y) + "," + str(column+x) +"] out of bound")
+        return False
+    elif matrix[row+y,column+x] == letter:
+        # print(letter + " on " + str(row+y),str(column+x))
+        return True
+    else:
+        return False
 
 txt = open("input.txt").read().split("\n")
 
@@ -21,18 +29,13 @@ xmas_counter = 0
 
 for row in range(len(matrix)):
     for column in range(len(matrix[row])):
-        if matrix[row,column] == 'X':
-            # print("X on " + str(row),str(column))
-            # Find adjacent M
+        if square_is_letter(row,column,0,0,'X'):
             for adjacent_letter in adjacent:
                 y = adjacent_letter[0]
                 x = adjacent_letter[1]
-                if 0 < row+y < len(matrix[row]) and 0 < column+x < len(matrix) and matrix[row+y,column+x] == 'M':
-                    # print("   M on " + str(row+y),str(column+x))
-                    # keep same x and y and search for the other letters
-                    if 0 < row+2*y < len(matrix[row]) and 0 < column+2*x < len(matrix) and matrix[row+2*y,column+2*x] == 'A':
-                        # print("   A on " + str(row+2*y),str(column+2*x))
-                        if 0 < row+3*y < len(matrix[row]) and 0 < column+3*x < len(matrix) and matrix[row+3*y,column+3*x] == 'S':
+                if square_is_letter(row,column,x,y,'M'):
+                    if square_is_letter(row,column,2*x,2*y,'A'):
+                        if square_is_letter(row,column,3*x,3*y,'S'):
                             print("X on " + str(row),str(column))
                             print("M on " + str(row+y),str(column+x))
                             print("A on " + str(row+2*y),str(column+2*x))
@@ -41,4 +44,3 @@ for row in range(len(matrix)):
                             xmas_counter += 1
 
 print(str(xmas_counter) + " XMAS in total")
-
