@@ -30,9 +30,7 @@ xmas_counter = 0
 for row in range(len(matrix)):
     for column in range(len(matrix[row])):
         if square_is_letter(row,column,0,0,'X'):
-            for adjacent_letter in adjacent:
-                y = adjacent_letter[0]
-                x = adjacent_letter[1]
+            for x,y in adjacent:
                 if square_is_letter(row,column,x,y,'M'):
                     if square_is_letter(row,column,2*x,2*y,'A'):
                         if square_is_letter(row,column,3*x,3*y,'S'):
